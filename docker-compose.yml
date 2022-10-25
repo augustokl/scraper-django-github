@@ -6,10 +6,20 @@ services:
     ports:
       - 8000:8000
     env_file: .env
+    command: python manage.py migrate 
     command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    depends_on:
+      - postgres
   postgres:
     image: postgres:alpine3.16
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=scrapper
+      - POSTGRES_DB=scraper
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres_data:

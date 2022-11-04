@@ -3,6 +3,8 @@ import re
 import requests
 from celery import shared_task
 
+from api.services import create_github_user
+
 from .models import GitHubUser, UserRepository
 
 
@@ -24,11 +26,14 @@ def get_repository():
         try:
             github_user = GitHubUser.objects.get(github_id=owner["id"])
         except GitHubUser.DoesNotExist:
-            print(owner)
+            github_user = create_github_user(username=owner["login"])
 
-        UserRepository.objects.create(
+        UserRepository.objects.update_or_create(
             github_id=repository["id"],
-            private=repository["private"],
-            description=repository["description"],
-            name=repository["name"],
+            github_user=github_user,
+            defaults={
+                "private": repository["private"],
+                "description": repository["description"],
+                "name": repository["name"],
+            },
         )

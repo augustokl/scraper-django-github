@@ -4,18 +4,18 @@ from django.db import models
 class GitHubUser(models.Model):
     login = models.CharField(max_length=255)
     github_id = models.IntegerField(unique=True)
-    name = models.CharField(max_length=255)
-    blog = models.URLField()
-    public_repos = models.IntegerField()
-    public_gists = models.IntegerField()
-    followers = models.IntegerField()
-    following = models.IntegerField()
-    bio = models.TextField()
+    name = models.CharField(max_length=255, null=True)
+    blog = models.URLField(null=True)
+    public_repos = models.IntegerField(null=True)
+    public_gists = models.IntegerField(null=True)
+    followers = models.IntegerField(null=True)
+    following = models.IntegerField(null=True)
+    bio = models.TextField(null=True)
 
 
 class UserRepository(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True)
     github_user = models.ForeignKey(GitHubUser, on_delete=models.SET_NULL, null=True)
     github_id = models.IntegerField(unique=True)
-    private = models.BooleanField()
-    description = models.TextField()
+    private = models.BooleanField(null=True)
+    description = models.TextField(null=True)

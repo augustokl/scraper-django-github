@@ -126,3 +126,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CELERY_BROKER_URL = os.environ.get("CLOUDAMQP_URL")
 BROKER_URL = CELERY_BROKER_URL
 CELERY_TIMEZONE = os.environ.get("CELERY_TIMEZONE")
+
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", None)

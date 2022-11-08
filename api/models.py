@@ -2,7 +2,7 @@ from django.db import models
 
 
 class GitHubUser(models.Model):
-    login = models.CharField(max_length=255)
+    login = models.CharField(max_length=255, null=True)
     github_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255, null=True)
     blog = models.URLField(null=True)
